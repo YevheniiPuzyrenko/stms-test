@@ -28,7 +28,7 @@ userRouter.get('/api/user/:username', authMiddleware, async ctx => {
   }
 });
 
-userRouter.post('/api/user', authMiddleware, async (ctx, next) => {  
+userRouter.post('/api/user', async (ctx, next) => {  
   try {
     let newUser = new User({ ...ctx.request.body });
     
