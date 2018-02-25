@@ -1,0 +1,24 @@
+.header {
+  height: 84px;
+  span{
+    line-height: 35px;
+  }
+  button {
+    float: right;
+  }  
+}
+
+.username-container {
+  margin: 20px;
+  display: block;
+  width: 248px;
+}
+
+.image-container {
+  margin: 20px;
+  width: 248px;
+  img{
+    width: 200px;
+    pointer-events: none;
+  }
+}

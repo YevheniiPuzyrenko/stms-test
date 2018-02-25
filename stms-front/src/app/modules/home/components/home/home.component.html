@@ -1,0 +1,23 @@
+<mat-card class="header">
+  <span>Welcome to STMS test website!</span>
+  <button mat-button
+          (click)="logout()"
+          color="primary">Log Out</button>
+</mat-card>
+<mat-card class="username-container"
+          [style.transform]="transforms.name"
+          (dragend)="dragEndHandler($event, 'name')"
+          (mousedown)="mouseDownHandler($event, 'name')"
+          (mouseup)="mouseUpHandler($event, 'name')">
+  <p>
+    {{user.username}}
+  </p>
+</mat-card>
+
+<mat-card class="image-container"
+          [style.transform]="transforms.image"
+          (mousedown)="mouseDownHandler($event, 'image')"
+          (mouseup)="mouseUpHandler($event, 'image')">
+  <img [src]="user.imageUrl || 'http://uc48.net/europeana/images/fpo_avatar.png'" alt="">  
+</mat-card>
+

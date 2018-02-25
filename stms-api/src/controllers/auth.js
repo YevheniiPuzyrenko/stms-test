@@ -6,7 +6,7 @@ import User from '../models/user';
 
 const authRouter = new Router();
 
-authRouter.post('/login', async ctx => {
+authRouter.post('/api/login', async ctx => {
   let { username, password } = ctx.request.body;
   const user = await User.findOne({ username });
 

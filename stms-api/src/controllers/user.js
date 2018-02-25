@@ -6,25 +6,29 @@ import authMiddleware from '../utils/jwt-check.js';
 const userRouter = new Router();
 const userGetFields = 'username nameCoords imageCoords';
 
-userRouter.delete('/users', authMiddleware, async ctx => {
+userRouter.delete('/api/users', authMiddleware, async ctx => {
   await User.remove();
-  ctx.body = 'Success';
+  ctx.body = {
+    msg: 'Success'
+  };
 });
 
-userRouter.get('/users', authMiddleware, async ctx => {
+userRouter.get('/api/users', authMiddleware, async ctx => {
   ctx.body = await User.find({});
 });
 
-userRouter.get('/user/:username', authMiddleware, async ctx => {
+userRouter.get('/api/user/:username', authMiddleware, async ctx => {
   try {
-    ctx.body = await User.find({username: ctx.params.username}, userGetFields);
+    ctx.body = await User.findOne({username: ctx.params.username}, userGetFields);
   } catch(e) {
     ctx.status = 404;
-    ctx.body = 'Not found';
+    ctx.body = {
+      msg: 'Not found'
+    };
   }
 });
 
-userRouter.post('/user', async (ctx, next) => {  
+userRouter.post('/api/user', authMiddleware, async (ctx, next) => {  
   try {
     let newUser = new User({ ...ctx.request.body });
     
@@ -37,7 +41,9 @@ userRouter.post('/user', async (ctx, next) => {
 
     if(eJson.code === 11000) {
       ctx.status = 400;
-      ctx.body = 'This user already exists';
+      ctx.body = {
+        msg: 'This user already exists'
+      };
     };
     
     if( eJson.errors ) {
@@ -47,38 +53,35 @@ userRouter.post('/user', async (ctx, next) => {
   }
 });
 
-userRouter.put('/user/:username/coords', authMiddleware, async ctx => {
-  const { username } = ctx.params.username;
+userRouter.put('/api/user/:username/coords', authMiddleware, async ctx => {
+  const { username } = ctx.params;
   let { nameCoords, imageCoords } = ctx.request.body;
-  
+
   if ( !imageCoords || !nameCoords ) {
     ctx.status = 400;
-    ctx.body = 'Please provide both image and name coordinates';
+    ctx.body = {
+      msg: 'Please provide both image and name coordinates'
+    };
     return;
   };
   
   try {
-    imageCoords = JSON.parse(imageCoords);
-    nameCoords = JSON.parse(nameCoords);
-  } catch(e) {
-    ctx.status = 400;
-    ctx.body = 'Please provide valid both image and name coordinates';
-    return;
-  };
-  
-  try {
-    const some = await User.findOne({ username: 'val2354111' });
+    const some = await User.findOne({ username });
     await some.update({
       nameCoords,
       imageCoords
     });
   } catch(e) {
-    ctx.body = 'Bad request';
-    ctx.status = 400;
+    ctx.body = {
+      msg:'User not found'
+    };
+    ctx.status = 404;
     return;    
   };
   
-  ctx.body = 'User successfully updated!';
+  ctx.body = {
+    msg: 'User successfully updated!'
+  };
 });
 
 export default userRouter;

@@ -1,0 +1,27 @@
+<mat-card class="form-container">
+  <h2>Login</h2>
+  <form class="login-form" [formGroup]="loginForm">
+    <mat-form-field>
+      <input name="username"
+             placeholder="Username"
+             type="text"
+             formControlName="username"
+             matInput>
+      <mat-error *ngIf="loginForm.controls.username.invalid">Username is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input name="password"
+             placeholder="Password"
+             type="password"
+             formControlName="password"
+             matInput>
+      <mat-error *ngIf="loginForm.controls.password.invalid">Password is required</mat-error>
+    </mat-form-field>
+    
+    <button mat-button
+            color="primary"
+            (click)="login()"
+            type="button">Let me in.</button>
+  </form>
+</mat-card>
