@@ -4,7 +4,7 @@ import User from '../models/user';
 import authMiddleware from '../utils/jwt-check.js';
 
 const userRouter = new Router();
-const userGetFields = 'username nameCoords imageCoords';
+const userGetFields = 'username nameCoords imageCoords imageUrl';
 
 userRouter.delete('/api/users', authMiddleware, async ctx => {
   await User.remove();
