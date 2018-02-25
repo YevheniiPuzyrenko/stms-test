@@ -28,4 +28,4 @@ import { LOGIN_ROUTES } from './login.routes';
   exports: [ LoginComponent ],
   providers: [ LoginService ]
 })
-export class LoginModule{}
+export class LoginModule {}

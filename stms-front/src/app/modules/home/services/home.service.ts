@@ -16,12 +16,12 @@ import 'rxjs/add/observable/throw';
 
 import { LoginService } from '../../login/services/login.service';
 
-export interface ICoord{
+export interface ICoord {
   x: number;
   y: number;
 }
 
-export interface IUser{
+export interface IUser {
   username: string;
   password: string;
   imageUrl: string;
@@ -34,8 +34,8 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private loginService: LoginService,
     private router: Router
-  ){}
-  
+  ) {}
+
   intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.loginService.getCredentials()['token'];
 
@@ -56,12 +56,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class HomeService {
-  constructor( private http: HttpClient ){}
-  
+  constructor( private http: HttpClient ) {}
+
   getUser(username) {
     return this.http.get(`/api/user/${username}`);
   }
-  
+
   saveCoords(username: string, coords: object) {
     const body = {
       imageCoords: coords['image'],

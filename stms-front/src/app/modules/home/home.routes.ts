@@ -27,10 +27,7 @@ export class UserResolver implements Resolve<IUser> {
 
   resolve(): Observable<IUser> | Promise<IUser> | IUser | any {
     const username = this.loginService.getCredentials()['currentUser'];
-    // if(!username) {
-    //   this.router.navigate(['login']);
-    //   return;
-    // }
+
     return this.service.getUser(username);
   }
 }

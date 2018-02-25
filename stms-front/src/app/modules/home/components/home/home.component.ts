@@ -30,12 +30,12 @@ export class HomeComponent implements OnInit {
   user: IUser;
   private coords: object;
   transforms: object;
-  private activeElement: string = '';
+  private activeElement = '';
   private mouseCoords: ICoord = {
     x: 0,
     y: 0
   };
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -49,44 +49,44 @@ export class HomeComponent implements OnInit {
       x: 0,
       y: 0
     };
-    
+
     this.user = this.route.snapshot.data.user;
     this.coords = {
       image: this.user.imageCoords || { ...defaultCoords },
       name: this.user.nameCoords || { ...defaultCoords }
     };
-    
+
     this.transforms = {
       name: this.getTransform(this.coords['name']),
       image: this.getTransform(this.coords['image'])
     };
   }
-  
+
   getTransform(coords: ICoord): SafeStyle {
     const style = `translateX(${coords.x - 20}px) translateY(${coords.y}px)`;
     return this.sanitizer.bypassSecurityTrustStyle(style);
   }
-  
-  mouseDownHandler( evt: any, target:string ): void {
+
+  mouseDownHandler( evt: any, target: string ): void {
     this.activeElement = target;
     this.mouseCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
   }
-  
+
   mouseUpHandler( evt: any, target: string ): void {
     this.activeElement = '';
     this.homeService.saveCoords(this.user.username, this.coords);
-  } 
-  
-  @HostListener('document:mousemove', ['$event']) 
+  }
+
+  @HostListener('document:mousemove', ['$event'])
   onMouseMove(evt) {
     const ae = this.activeElement;
-    if(!!ae) {
-      let coords = this.coords[ae];
-      let x = this.mouseCoords.x - evt.clientX;
-      let y = this.mouseCoords.y - evt.clientY;
+    if (!!ae) {
+      const coords = this.coords[ae];
+      const x = this.mouseCoords.x - evt.clientX;
+      const y = this.mouseCoords.y - evt.clientY;
       this.mouseCoords.x = evt.clientX;
       this.mouseCoords.y = evt.clientY;
       coords.x -= x;
@@ -94,9 +94,9 @@ export class HomeComponent implements OnInit {
       this.transforms[ae] = this.getTransform(coords);
     }
   }
-  
-  logout():void {
-    this.loginService.setCredentials('', '')
-    this.router.navigate(['login'])
+
+  logout(): void {
+    this.loginService.setCredentials('', '');
+    this.router.navigate(['login']);
   }
 }

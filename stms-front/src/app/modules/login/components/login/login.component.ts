@@ -17,9 +17,8 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
   private loginForm: FormGroup;
-  
+
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
@@ -33,7 +32,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(): void{
+  login(): void {
     const credentials: object = this.loginForm.value;
     this.loginService.login(credentials)
       .subscribe((val: object) => {
@@ -41,5 +40,4 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['']);
       });
   }
-
 }

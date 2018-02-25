@@ -6,7 +6,6 @@ import {
 
 @Injectable()
 export class AuthGuard {
-  
   constructor( private router: Router ) {}
 
   canActivate( route: ActivatedRouteSnapshot ): boolean {
@@ -14,9 +13,8 @@ export class AuthGuard {
 
     if (!tokenExists) {
       this.router.navigate(['login']);
-    };
-    
+    }
+
     return tokenExists;
   }
-  
 }
