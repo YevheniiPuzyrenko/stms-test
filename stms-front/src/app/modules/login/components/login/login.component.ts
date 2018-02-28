@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     const credentials: object = this.loginForm.value;
+
     this.loginService.login(credentials)
       .subscribe((val: object) => {
         this.loginService.setCredentials(credentials['username'], val['token']);

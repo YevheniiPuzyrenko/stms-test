@@ -37,7 +37,8 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.loginService.getCredentials()['token'];
+    const credentials = this.loginService.getCredentials();
+    const token = credentials['token'] || '';
 
     const authenticatedRequest = req.clone({
       setHeaders: {
